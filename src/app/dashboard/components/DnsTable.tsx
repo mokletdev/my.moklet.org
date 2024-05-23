@@ -149,6 +149,7 @@ export default function DnsTable({ data }: { data: DNSRecordProps[] }) {
                 <Button
                   variant={"delete"}
                   onClick={() => deleteRecord(data.id)}
+                  type="button"
                 >
                   Delete
                 </Button>
