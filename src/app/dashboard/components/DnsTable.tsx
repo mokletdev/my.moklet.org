@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import toast from "react-hot-toast";
 import { UpsertDNSAction } from "../actions";
+import { revalidatePath } from "next/cache";
 
 const columns: TableColumn<DNSRecordProps>[] = [
   {
@@ -53,6 +54,7 @@ export default function DnsTable({ data }: { data: DNSRecordProps[] }) {
       toast.error(action.errors[0].message, { id: toastId });
     else {
       toast.success("Successfully deleted record", { id: toastId });
+      revalidatePath("/records", "page");
       window.location.reload();
     }
   }

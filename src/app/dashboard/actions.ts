@@ -2,6 +2,7 @@
 
 import { nextGetServerSession } from "@/lib/next-auth";
 import { createDNSRecord, updateDNSRecord } from "@/utils/DNSRecords";
+import { revalidatePath } from "next/cache";
 
 export async function UpsertDNSAction(data: FormData, id?: string) {
   const session = await nextGetServerSession();
@@ -22,6 +23,8 @@ export async function UpsertDNSAction(data: FormData, id?: string) {
     } else {
       action = await createDNSRecord(body);
     }
+
+    revalidatePath("/records", "page");
 
     return action;
   } catch (error) {
