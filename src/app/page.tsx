@@ -1,113 +1,112 @@
-import Image from "next/image";
+"use client";
+
+import Typewriter from "@/utils/typewriter";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { Link } from "./components/ui/button";
+import { H1, H2, H3, H4, P } from "./components/ui/text";
 
 export default function Home() {
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    new Typewriter(document.getElementById("animate-tw"), {
+      strings: [
+        session
+          ? `${session.user?.name.split(" ")[0].toLowerCase()}.my.moklet.org`
+          : null,
+        "your-name.my.moklet.org",
+        "project-name.moklet.org",
+      ],
+      autoStart: true,
+      loop: true,
+      delay: 100,
+    });
+  }, [session]);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <>
+      {status === "authenticated" && (
+        <H3 className="my-5">
+          You&apos;ve signed in as{" "}
+          <span className="text-amber-400">{session.user?.name}</span>
+        </H3>
+      )}
+
+      <div className="py-12 w-full">
+        <H2 className="mb-20">
+          Claim Now! <br />
+          <span id="animate-tw" className="text-red-500"></span>
+        </H2>
+        <div className="block mb-12">
+          <H1 className="mb-2">Moklet Domains</H1>
+          <P>
+            Moklet Domains is an initiative by MokletDev at SMK Telkom Malang to
+            provide every student with a unique .my.moklet.org domain. This
+            helps students at SMK Telkom Malang create a professional ondne
+            presence, showcase their projects, and enhance their digital skills.
+          </P>
+        </div>
+        <div className="block mb-12">
+          <H4 className="mb-1">Grab Your Own .my.moklet.org Domain!</H4>
+          <P className="mb-4">
+            You can grab your own sweet-looking .my.moklet.org domain for free!
+            Empower your ondne presence with a personadzed domain exclusively
+            for SMK Telkom Malang students.
+          </P>
+          <Link
+            href={status === "authenticated" ? "/dashboard" : "/auth/signin"}
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            {status === "authenticated" ? "Manage your domain" : "Claim now"}
+          </Link>
+        </div>
+        <div className="block mb-12">
+          <H4 className="mb-1">Register an Exclusive .moklet.org Domain</H4>
+          <P className="mb-4">
+            If you want a .moklet.org domain, please contact the developer
+            directly because we only provide it to a certain user with specific
+            needs.
+          </P>
+          <Link href={"mailto:dev@moklet.org"}>Contact dev</Link>
+        </div>
+        <div className="block mb-12">
+          <H4 className="mb-1">Abusive Usage</H4>
+          <P className="mb-4">
+            If you bedeve one of the subdomains is abusing the service, please
+            report it to{" "}
+            <a
+              href="mailto:dev@moklet.org"
+              className="hover:underline text-red-500"
+            >
+              dev@moklet.org
+            </a>
+          </P>
+        </div>
+        <div className="block mb-12">
+          <H2 className="mb-6">Frequently Asked Questions</H2>
+          <div className="flex flex-col gap-4">
+            <div>
+              <H4>1. Who is eligible for the domain?</H4>
+              <P>All students of SMK Telkom Malang are eligible user.</P>
+            </div>
+            <div>
+              <H4>2. Is the domain really free?</H4>
+              <P>It is, the domain is completely free for all eligible user.</P>
+            </div>
+            <div>
+              <H4>3. How long can I keep the domain?</H4>
+              <P>
+                You can keep your domain as long as you are a student at SMK
+                Telkom Malang.
+              </P>
+            </div>
+          </div>
+        </div>
+        <div className="block">
+          <H4 className="mb-1">DNS Records Moklet Domain</H4>
+          <Link href={"/records"}>See Records</Link>
         </div>
       </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </>
   );
 }
