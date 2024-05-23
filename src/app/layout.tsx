@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Share_Tech } from "next/font/google";
 import "./globals.css";
+import NextAuthProvider from "./components/NextAuthProvider";
 
 const shareTech = Share_Tech({ subsets: ["latin"], weight: ["400"] });
 
@@ -19,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={shareTech.className + " px-5 md:px-48 bg-zinc-900"}>
-        {children}
+        <NextAuthProvider basePath="/api/auth" refetchOnWindowFocus>
+          {children}
+        </NextAuthProvider>
       </body>
     </html>
   );
