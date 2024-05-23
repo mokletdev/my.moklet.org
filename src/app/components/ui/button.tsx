@@ -10,6 +10,10 @@ const buttonVariants = cva(
       variant: {
         default:
           "bg-white text-zinc-900 hover:bg-red-500 hover:text-zinc-900 disabled:bg-white disabled:text-black",
+        success:
+          "bg-green-500 text-white hover:bg-opacity-70 disabled:bg-opacity-50 disabled:text-black",
+        delete:
+          "bg-red-700 text-white hover:bg-opacity-70 disabled:bg-opacity-50 disabled:text-black",
       },
     },
   }

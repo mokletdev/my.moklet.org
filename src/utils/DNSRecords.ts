@@ -16,17 +16,7 @@ interface CloudflareResponse {
     total_count: number;
     total_pages: number;
   };
-  result: DNSRecord[];
-}
-
-export interface DNSRecord {
-  id: string;
-  name: string;
-  type: "A" | "CNAME";
-  content: string;
-  proxied: boolean;
-  username: string;
-  description: string;
+  result: DNSRecordProps[];
 }
 
 export const getDNSRecordsByOwner = async (
@@ -35,13 +25,13 @@ export const getDNSRecordsByOwner = async (
 ) => {
   const url =
     BASE_URL +
-    `/client/v4/zones/${process.env.CLOUDFLARE_DOMAIN_ZONE_ID}/dns_records?comment.contains=${username}&name=contains%3Amy&page=${page}`;
+    `/client/v4/zones/${process.env.CLOUDFLARE_DOMAIN_ZONE_ID}/dns_records?comment.contains=${username}&name=contains%3A.my&page=${page}`;
 
   const response = await fetch(url, {
     headers: authorization,
   }).then((res) => res.json());
 
-  const records: DNSRecord[] = response.result.map((record: any) => ({
+  const records: DNSRecordProps[] = response.result.map((record: any) => ({
     id: record.id,
     name: record.name,
     type: record.type,
@@ -57,7 +47,7 @@ export const getDNSRecordsByOwner = async (
 export const getDNSRecords = async (filter: string = "", page: number = 1) => {
   const url =
     BASE_URL +
-    `/client/v4/zones/${process.env.CLOUDFLARE_DOMAIN_ZONE_ID}/dns_records?search=${filter}&page=${page}&name=contains%3Amy`;
+    `/client/v4/zones/${process.env.CLOUDFLARE_DOMAIN_ZONE_ID}/dns_records?search=${filter}&page=${page}&per_page=2000&name=contains%3A.my`;
 
   const response = await fetch(url, {
     headers: authorization,
@@ -76,7 +66,17 @@ export const getDNSRecords = async (filter: string = "", page: number = 1) => {
   return { ...response, result: records };
 };
 
-interface DNSRecordProps {
+export interface DNSRecordProps {
+  id: string;
+  content: string;
+  name: string;
+  type: "A" | "CNAME";
+  proxied: boolean;
+  username: string;
+  description: string;
+}
+
+export interface CreateDNSRecordInput {
   content: string;
   name: string;
   type: "A" | "CNAME";
@@ -92,14 +92,14 @@ export const createDNSRecord = async ({
   proxied,
   type,
   username,
-}: DNSRecordProps) => {
+}: CreateDNSRecordInput) => {
   const url =
     BASE_URL +
     `/client/v4/zones/${process.env.CLOUDFLARE_DOMAIN_ZONE_ID}/dns_records`;
 
   const data = {
     content,
-    name,
+    name: name + ".my.moklet.org",
     proxied,
     type,
     comment: username + ";" + description,
@@ -119,7 +119,7 @@ export const createDNSRecord = async ({
 
 export const updateDNSRecord = async (
   id: string,
-  { content, description, name, proxied, type, username }: DNSRecordProps
+  { content, description, name, proxied, type, username }: CreateDNSRecordInput
 ) => {
   const url =
     BASE_URL +
@@ -127,7 +127,7 @@ export const updateDNSRecord = async (
 
   const data = {
     content,
-    name,
+    name: name + ".my.moklet.org",
     proxied,
     type,
     comment: username + ";" + description,

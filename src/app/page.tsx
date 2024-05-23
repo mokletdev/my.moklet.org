@@ -3,7 +3,6 @@
 import Typewriter from "@/utils/typewriter";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
-import Header from "./components/parts/header";
 import { Link } from "./components/ui/button";
 import { H1, H2, H3, H4, P } from "./components/ui/text";
 
@@ -34,7 +33,7 @@ export default function Home() {
         </H3>
       )}
 
-      <div className="py-16 md:py-32 w-full">
+      <div className="py-12 w-full">
         <H2 className="mb-20">
           Claim Now! <br />
           <span id="animate-tw" className="text-red-500"></span>
@@ -102,6 +101,10 @@ export default function Home() {
               </P>
             </div>
           </div>
+        </div>
+        <div className="block">
+          <H4 className="mb-1">DNS Records Moklet Domain</H4>
+          <Link href={"/records"}>See Records</Link>
         </div>
       </div>
     </>
