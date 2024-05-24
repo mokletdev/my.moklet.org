@@ -1,10 +1,14 @@
 "use server";
 
 import { nextGetServerSession } from "@/lib/next-auth";
-import { createDNSRecord, updateDNSRecord } from "@/utils/DNSRecords";
+import {
+  createDNSRecord,
+  deleteDNSRecord,
+  updateDNSRecord,
+} from "@/utils/DNSRecords";
 import { revalidatePath } from "next/cache";
 
-export async function UpsertDNSAction(data: FormData, id?: string) {
+export async function upsertDNSAction(data: FormData, id?: string) {
   const session = await nextGetServerSession();
 
   let action = null;
@@ -32,5 +36,17 @@ export async function UpsertDNSAction(data: FormData, id?: string) {
       success: false,
       errors: action.errors,
     };
+  }
+}
+
+export async function deleteDNSAction(id: string) {
+  let action = null;
+
+  try {
+    action = await deleteDNSRecord(id);
+    revalidatePath("/records", "page");
+    return { success: action.success };
+  } catch (error) {
+    return { success: false, errors: action.errors };
   }
 }
