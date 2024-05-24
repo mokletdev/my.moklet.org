@@ -2,12 +2,12 @@
 
 import { Button } from "@/app/components/ui/button";
 import { Checkbox, Input, Select } from "@/app/components/ui/input";
-import { DNSRecordProps, deleteDNSRecord } from "@/utils/DNSRecords";
+import { DNSRecordProps } from "@/utils/DNSRecords";
+import { revalidatePath } from "next/cache";
 import { useEffect, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import toast from "react-hot-toast";
-import { UpsertDNSAction } from "../actions";
-import { revalidatePath } from "next/cache";
+import { deleteDNSAction, upsertDNSAction } from "../actions";
 
 const columns: TableColumn<DNSRecordProps>[] = [
   {
@@ -48,19 +48,18 @@ export default function DnsTable({ data }: { data: DNSRecordProps[] }) {
   async function deleteRecord(id: string) {
     if (!confirm("Are you sure to delete this record?")) return;
     const toastId = toast.loading("Loading...");
-    const action = await deleteDNSRecord(id);
+    const action = await deleteDNSAction(id);
 
     if (!action.success) toast.error(action.errors[0].message, { id: toastId });
     else {
       toast.success("Successfully deleted record", { id: toastId });
-      revalidatePath("/records", "page");
       window.location.reload();
     }
   }
 
   async function upsertRecord(data: FormData, id?: string) {
     const toastId = toast.loading("Loading...");
-    let action = await UpsertDNSAction(data, id);
+    let action = await upsertDNSAction(data, id);
 
     if (!action.success) toast.error(action.errors[0].message, { id: toastId });
     else {

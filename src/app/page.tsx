@@ -102,6 +102,38 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <div className="block mb-12">
+          <H2 className="mb-6">How to Claim?</H2>
+          <div className="flex flex-col gap-4">
+            <div>
+              <H4>1. Login using SMK Telkom Malang email</H4>
+              <P>
+                You have to login to the app using your SMK Telkom Malang email
+                that ends with &apos;smktelkom-mlg.sch.id&apos; by pressing the
+                &quot;Claim now&quot; button.
+              </P>
+            </div>
+            <div>
+              <H4>2. Go to your dashboard</H4>
+              <P>
+                Go to your{" "}
+                <a href="/dashboard" className="text-red-500 hover:underline">
+                  dashboard
+                </a>{" "}
+                by clicking the &quot;Manage your domain&quot; button at the
+                same place as the &quot;Claim now&quot; button.
+              </P>
+            </div>
+            <div>
+              <H4>3. Create a new DNS record</H4>
+              <P>
+                Create a new DNS record by filling in the data needed in the DNS
+                record creation process: Name, Content, Description, Type,
+                Proxied.
+              </P>
+            </div>
+          </div>
+        </div>
         <div className="block">
           <H4 className="mb-1">DNS Records Moklet Domain</H4>
           <Link href={"/records"}>See Records</Link>
