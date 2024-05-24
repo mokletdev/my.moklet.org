@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 const BASE_URL = "https://api.cloudflare.com";
 const authorization = {
   Authorization: `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`,
@@ -154,6 +156,8 @@ export const deleteDNSRecord = async (id: string) => {
     method: "DELETE",
     headers: authorization,
   }).then((res) => res.json());
+
+  revalidatePath("/records", "page");
 
   return response;
 };
