@@ -50,8 +50,7 @@ export default function DnsTable({ data }: { data: DNSRecordProps[] }) {
     const toastId = toast.loading("Loading...");
     const action = await deleteDNSRecord(id);
 
-    if (action.success == false)
-      toast.error(action.errors[0].message, { id: toastId });
+    if (!action.success) toast.error(action.errors[0].message, { id: toastId });
     else {
       toast.success("Successfully deleted record", { id: toastId });
       revalidatePath("/records", "page");
@@ -63,8 +62,7 @@ export default function DnsTable({ data }: { data: DNSRecordProps[] }) {
     const toastId = toast.loading("Loading...");
     let action = await UpsertDNSAction(data, id);
 
-    if (action.success == false)
-      toast.error(action.errors[0].message, { id: toastId });
+    if (!action.success) toast.error(action.errors[0].message, { id: toastId });
     else {
       toast.success(`Successfully ${id ? "updated" : "created"} record`, {
         id: toastId,
@@ -84,9 +82,24 @@ export default function DnsTable({ data }: { data: DNSRecordProps[] }) {
             upsertRecord(formData);
           }}
         >
-          <Input label="Name" name="name" required />
-          <Input label="Content" name="content" required />
-          <Input label="Description" name="description" required />
+          <Input
+            label="Name"
+            name="name"
+            placeholder="e.g: john (for john.my.moklet.org)"
+            required
+          />
+          <Input
+            label="Content"
+            name="content"
+            placeholder="e.g: 1.1.1.1 (IPv4 address)"
+            required
+          />
+          <Input
+            label="Description"
+            name="description"
+            placeholder="e.g: John's domain"
+            required
+          />
           <Select
             label="Type"
             name="type"
