@@ -3,7 +3,6 @@
 import { Button } from "@/app/components/ui/button";
 import { Checkbox, Input, Select } from "@/app/components/ui/input";
 import { DNSRecordProps } from "@/utils/DNSRecords";
-import { revalidatePath } from "next/cache";
 import { useEffect, useState } from "react";
 import DataTable, { TableColumn } from "react-data-table-component";
 import toast from "react-hot-toast";
@@ -84,7 +83,7 @@ export default function DnsTable({ data }: { data: DNSRecordProps[] }) {
           <Input
             label="Name"
             name="name"
-            placeholder="e.g: john (for john.my.moklet.org)"
+            placeholder="e.g: john (for john-my.moklet.org)"
             required
           />
           <Input
@@ -129,7 +128,7 @@ export default function DnsTable({ data }: { data: DNSRecordProps[] }) {
               <Input
                 label="Name"
                 name="name"
-                defaultValue={data.name.replace(".my.moklet.org", "")}
+                defaultValue={data.name.replace("-my.moklet.org", "")}
                 required
               />
               <Input

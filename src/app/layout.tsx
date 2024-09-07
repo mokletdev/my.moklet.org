@@ -10,7 +10,7 @@ const shareTech = Share_Tech({ subsets: ["latin"], weight: ["400"] });
 export const metadata: Metadata = {
   title: "Moklet Domains",
   description:
-    "Moklet Domains is an initiative by SMK Telkom Malang to provide every student with a unique .my.moklet.org domain. This helps students create a professional online presence, showcase their projects, and enhance their digital skills",
+    "Moklet Domains is an initiative by MokletDEv to provide every student with a unique *-my.moklet.org domain. This helps students create a professional online presence, showcase their projects, and enhance their digital skills",
   authors: [
     { name: "Kusindra Aji Rabbany", url: "https://benspace.xyz/" },
     { name: "Ahsan Awadullah Azizan", url: "https://ahsanzizan.xyz" },
