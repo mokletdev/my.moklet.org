@@ -13,9 +13,9 @@ export default function Home() {
     new Typewriter(document.getElementById("animate-tw"), {
       strings: [
         session
-          ? `${session.user?.name.split(" ")[0].toLowerCase()}.my.moklet.org`
+          ? `${session.user?.name.split(" ")[0].toLowerCase()}-my.moklet.org`
           : null,
-        "your-name.my.moklet.org",
+        "your-name-my.moklet.org",
         "project-name.moklet.org",
       ],
       autoStart: true,
@@ -42,15 +42,15 @@ export default function Home() {
           <H1 className="mb-2">Moklet Domains</H1>
           <P>
             Moklet Domains is an initiative by MokletDev at SMK Telkom Malang to
-            provide every student with a unique .my.moklet.org domain. This
+            provide every student with a unique *-my.moklet.org domain. This
             helps students at SMK Telkom Malang create a professional ondne
             presence, showcase their projects, and enhance their digital skills.
           </P>
         </div>
         <div className="block mb-12">
-          <H4 className="mb-1">Grab Your Own .my.moklet.org Domain!</H4>
+          <H4 className="mb-1">Grab Your Own *-my.moklet.org Domain!</H4>
           <P className="mb-4">
-            You can grab your own sweet-looking .my.moklet.org domain for free!
+            You can grab your own sweet-looking *-my.moklet.org domain for free!
             Empower your ondne presence with a personadzed domain exclusively
             for SMK Telkom Malang students.
           </P>

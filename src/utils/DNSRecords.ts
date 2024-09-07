@@ -27,7 +27,7 @@ export const getDNSRecordsByOwner = async (
 ) => {
   const url =
     BASE_URL +
-    `/client/v4/zones/${process.env.CLOUDFLARE_DOMAIN_ZONE_ID}/dns_records?comment.contains=${username}&name=contains%3A.my&page=${page}`;
+    `/client/v4/zones/${process.env.CLOUDFLARE_DOMAIN_ZONE_ID}/dns_records?comment.contains=${username}&name=contains%3A-my&page=${page}`;
 
   const response = await fetch(url, {
     headers: authorization,
@@ -49,7 +49,7 @@ export const getDNSRecordsByOwner = async (
 export const getDNSRecords = async (filter: string = "", page: number = 1) => {
   const url =
     BASE_URL +
-    `/client/v4/zones/${process.env.CLOUDFLARE_DOMAIN_ZONE_ID}/dns_records?search=${filter}&page=${page}&per_page=2000&name=contains%3A.my`;
+    `/client/v4/zones/${process.env.CLOUDFLARE_DOMAIN_ZONE_ID}/dns_records?search=${filter}&page=${page}&per_page=2000&name=contains%3A-my`;
 
   const response = await fetch(url, {
     headers: authorization,
@@ -101,7 +101,7 @@ export const createDNSRecord = async ({
 
   const data = {
     content,
-    name: name + ".my.moklet.org",
+    name: name + "-my.moklet.org",
     proxied,
     type,
     comment: username + ";" + description,
@@ -129,7 +129,7 @@ export const updateDNSRecord = async (
 
   const data = {
     content,
-    name: name + ".my.moklet.org",
+    name: name + "-my.moklet.org",
     proxied,
     type,
     comment: username + ";" + description,
